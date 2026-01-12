@@ -1,5 +1,6 @@
 import os
 import pymysql
+
 # Monkey patch for Django to work with PyMySQL
 pymysql.version_info = (2, 2, 1, "final", 0)
 pymysql.install_as_MySQLdb()
@@ -35,7 +36,20 @@ INSTALLED_APPS = [
     'news',
     'staff',
     'publications',
-    'user_management'
+    'user_management',
+    'wagtail.contrib.forms',
+    'wagtail.contrib.redirects',
+    'wagtail.embeds',
+    'wagtail.sites',
+    'wagtail.users',
+    'wagtail.snippets',
+    'wagtail.documents',
+    'wagtail.images',
+    'wagtail.search',
+    'wagtail.admin',
+    'wagtail',
+    'modelcluster',
+    'taggit',
 
 ]
 
@@ -109,9 +123,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
-
-
 SPECTACULAR_SETTINGS = {
     'TITLE': 'IC Cleaners Backend Solution by-IC Cleaners Tech',
     'DESCRIPTION': 'Ic Cleaner MVP Solution',
@@ -155,8 +166,6 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_REFRESH_SERIALIZER': 'rest_framework_simplejwt.serializers.TokenRefreshSlidingSerializer',
 }
 
-
-
 # Internationalization
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
@@ -166,9 +175,6 @@ USE_TZ = True
 # Static files
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
-
-
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = MEDIA_DIR
@@ -208,4 +214,6 @@ EMAIL_HOST_PASSWORD = 'nckp gdyt pppw axch'
 
 FRONTEND_LOGIN_URL = 'http://localhost:4200/'
 
-
+# Replace with your actual site URL, e.g. your domain or localhost for dev
+WAGTAILADMIN_BASE_URL = 'http://localhost:8000'
+WAGTAIL_SITE_NAME = "NKSC Backend CMS"
