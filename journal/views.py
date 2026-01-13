@@ -2,8 +2,12 @@ from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.parsers import MultiPartParser, FormParser
 
-from drf_spectacular.utils import extend_schema, OpenApiParameter
+from drf_spectacular.utils import (
+    extend_schema,
+    OpenApiParameter,
+)
 
 from .models import Journal
 from .serializers import JournalSerializer
@@ -11,24 +15,37 @@ from .serializers import JournalSerializer
 
 
 
+
+
+
+
+
 class JournalCreateAPIView(APIView):
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
+    parser_classes = [MultiPartParser, FormParser]
 
     @extend_schema(
         request=JournalSerializer,
         responses={201: JournalSerializer},
         summary="Create Journal",
-        description="Create a new journal (Admin/Editor only)",
+        description="Create a journal with PDF upload (multipart/form-data)",
     )
     def post(self, request):
-        serializer = JournalSerializer(data=request.data)
+        serializer = JournalSerializer(
+            data=request.data,
+            context={"request": request},
+        )
+
         if serializer.is_valid():
-            serializer.save()
+            journal = serializer.save()
             return Response(
                 {
                     "code": status.HTTP_201_CREATED,
                     "message": "Journal created successfully",
-                    "data": serializer.data,
+                    "data": JournalSerializer(
+                        journal,
+                        context={"request": request},
+                    ).data,
                 },
                 status=status.HTTP_201_CREATED,
             )
@@ -45,8 +62,10 @@ class JournalCreateAPIView(APIView):
 
 
 
+
 class JournalUpdateAPIView(APIView):
     permission_classes = [IsAuthenticated]
+    parser_classes = [MultiPartParser, FormParser]
 
     @extend_schema(
         request=JournalSerializer,
@@ -60,7 +79,7 @@ class JournalUpdateAPIView(APIView):
             )
         ],
         summary="Update Journal",
-        description="Update journal by ID",
+        description="Update journal with optional PDF replacement",
     )
     def put(self, request, journal_id):
         try:
@@ -93,7 +112,6 @@ class JournalUpdateAPIView(APIView):
 
 
 
-
 class JournalListAPIView(APIView):
     permission_classes = [AllowAny]
 
@@ -112,6 +130,33 @@ class JournalListAPIView(APIView):
                 "data": serializer.data,
             }
         )
+
+
+
+
+
+class JournalListAPIView(APIView):
+    permission_classes = [AllowAny]
+
+    @extend_schema(
+        responses={200: JournalSerializer(many=True)},
+        summary="List Journals",
+        description="Public API – list all published journals",
+    )
+    def get(self, request):
+        journals = Journal.objects.filter(is_published=True).order_by("-created_at")
+        serializer = JournalSerializer(journals, many=True)
+        return Response(
+            {
+                "code": status.HTTP_200_OK,
+                "data": serializer.data,
+            }
+        )
+
+
+
+
+
 
 
 

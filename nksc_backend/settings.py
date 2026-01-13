@@ -32,12 +32,13 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
 
     # Third-party
-    "rest_framework",    
+    "rest_framework", 
+    'rest_framework_simplejwt',   
     "drf_spectacular",
+    "corsheaders",
           
     "django_cleanup.apps.CleanupConfig",
 
-    # Local apps
     "journal",
     "media_stuff",
     "news",

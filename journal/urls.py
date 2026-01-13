@@ -1,5 +1,7 @@
 from django.urls import path
+
 from journal.views import *
+
 
 urlpatterns = [
     path("", JournalListAPIView.as_view()),
