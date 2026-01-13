@@ -1,14 +1,9 @@
 from django.urls import path
-from .views import (
-    create_journal,
-    update_journal,
-    get_all_journals,
-    delete_journal,
-)
+from journal.views import *
 
 urlpatterns = [
-    path("journals/", get_all_journals),
-    path("journals/create/", create_journal),
-    path("journals/<int:journal_id>/update/", update_journal),
-    path("journals/<int:journal_id>/delete/", delete_journal),
+    path("", JournalListAPIView.as_view()),
+    path("create/", JournalCreateAPIView.as_view()),
+    path("update/<int:journal_id>/", JournalUpdateAPIView.as_view()),
+    path("delete/<int:journal_id>/", JournalDeleteAPIView.as_view()),
 ]

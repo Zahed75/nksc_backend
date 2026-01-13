@@ -23,22 +23,27 @@ ALLOWED_HOSTS = []
 
 # Application definition
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'django_cleanup.apps.CleanupConfig',
-    'drf_spectacular',
-    'journal',
-    'media_stuff',
-    'news',
-    'staff',
-    'publications',
-    'user_management',
+    # Django core
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
 
+    # Third-party
+    "rest_framework",    
+    "drf_spectacular",
+          
+    "django_cleanup.apps.CleanupConfig",
 
+    # Local apps
+    "journal",
+    "media_stuff",
+    "news",
+    "staff",
+    "publications",
+    "user_management",
 ]
 
 MIDDLEWARE = [
@@ -111,16 +116,28 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-SPECTACULAR_SETTINGS = {
-    'TITLE': 'Nazmul Karim Study Center Application build by Zahed Hasan',
-    'DESCRIPTION': 'NKSC Center',
-    'VERSION': '1.0.0',
-    'SERVE_INCLUDE_SCHEMA': False,
-    'COMPONENT_SPLIT_REQUEST': True,
-    'SCHEMA_PATH_PREFIX': '/api/',
-    'SCHEMA_PATH_PREFIX_TRIM': True,
-    'GENERIC_ADDITIONAL_PROPERTIES': 'dict',
+
+
+
+REST_FRAMEWORK = {
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework.authentication.SessionAuthentication",
+        "rest_framework.authentication.BasicAuthentication",
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ),
+    "DEFAULT_PERMISSION_CLASSES": (
+        "rest_framework.permissions.AllowAny",
+    ),
 }
+
+SPECTACULAR_SETTINGS = {
+    "TITLE": "Nazmul Karim Study Center API",
+    "DESCRIPTION": "NKSC Backend APIs",
+    "VERSION": "1.0.0",
+    "SERVE_INCLUDE_SCHEMA": False,
+}
+
 
 # Optional: Suppress warnings
 import logging
