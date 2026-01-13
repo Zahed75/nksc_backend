@@ -37,19 +37,7 @@ INSTALLED_APPS = [
     'staff',
     'publications',
     'user_management',
-    'wagtail.contrib.forms',
-    'wagtail.contrib.redirects',
-    'wagtail.embeds',
-    'wagtail.sites',
-    'wagtail.users',
-    'wagtail.snippets',
-    'wagtail.documents',
-    'wagtail.images',
-    'wagtail.search',
-    'wagtail.admin',
-    'wagtail',
-    'modelcluster',
-    'taggit',
+
 
 ]
 
@@ -124,8 +112,8 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 SPECTACULAR_SETTINGS = {
-    'TITLE': 'IC Cleaners Backend Solution by-IC Cleaners Tech',
-    'DESCRIPTION': 'Ic Cleaner MVP Solution',
+    'TITLE': 'Nazmul Karim Study Center Application build by Zahed Hasan',
+    'DESCRIPTION': 'NKSC Center',
     'VERSION': '1.0.0',
     'SERVE_INCLUDE_SCHEMA': False,
     'COMPONENT_SPLIT_REQUEST': True,
@@ -213,7 +201,3 @@ EMAIL_HOST_USER = 'syscomatic.technologies@gmail.com'
 EMAIL_HOST_PASSWORD = 'nckp gdyt pppw axch'
 
 FRONTEND_LOGIN_URL = 'http://localhost:4200/'
-
-# Replace with your actual site URL, e.g. your domain or localhost for dev
-WAGTAILADMIN_BASE_URL = 'http://localhost:8000'
-WAGTAIL_SITE_NAME = "NKSC Backend CMS"

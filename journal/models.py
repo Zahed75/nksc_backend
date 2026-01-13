@@ -1,13 +1,7 @@
 from django.db import models
-from wagtail.models import Page
-from wagtail.fields import RichTextField
-from wagtail.admin.panels import FieldPanel, MultiFieldPanel
-from wagtail.documents.models import Document
-from wagtail.images.models import Image
-from wagtail.api import APIField
 
-
-class JournalPage(Page):
+class Journal(models.Model):
+    title = models.CharField(max_length=255)
     volume = models.CharField(max_length=50)
     year = models.PositiveIntegerField()
     issue = models.CharField(max_length=100)
@@ -15,52 +9,16 @@ class JournalPage(Page):
     issn = models.CharField(max_length=50, blank=True)
     doi_url = models.URLField(blank=True)
 
-    description = RichTextField()
+    description = models.TextField()
     pages = models.PositiveIntegerField()
     file_size_mb = models.DecimalField(max_digits=5, decimal_places=2)
 
-    journal_file = models.ForeignKey(
-        Document, null=True, blank=True, on_delete=models.SET_NULL, related_name="+"
-    )
-    preview_image = models.ForeignKey(
-        Image, null=True, blank=True, on_delete=models.SET_NULL, related_name="+"
-    )
+    pdf_file = models.FileField(upload_to="journals/")
+    preview_image = models.ImageField(upload_to="journal_previews/", blank=True, null=True)
 
-    content_panels = Page.content_panels + [
-        MultiFieldPanel(
-            [
-                FieldPanel("volume"),
-                FieldPanel("year"),
-                FieldPanel("issue"),
-                FieldPanel("editor"),
-                FieldPanel("issn"),
-                FieldPanel("doi_url"),
-            ],
-            heading="Journal Metadata",
-        ),
-        FieldPanel("description"),
-        MultiFieldPanel(
-            [
-                FieldPanel("pages"),
-                FieldPanel("file_size_mb"),
-                FieldPanel("journal_file"),
-                FieldPanel("preview_image"),
-            ],
-            heading="Files & Media",
-        ),
-    ]
+    is_published = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
 
-    api_fields = [
-        APIField("title"),
-        APIField("volume"),
-        APIField("year"),
-        APIField("issue"),
-        APIField("editor"),
-        APIField("issn"),
-        APIField("doi_url"),
-        APIField("description"),
-        APIField("pages"),
-        APIField("file_size_mb"),
-        APIField("journal_file"),
-        APIField("preview_image"),
-    ]
+
+    def __str__(self):
+        return self.title
