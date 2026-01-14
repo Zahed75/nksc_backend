@@ -23,9 +23,7 @@ ALLOWED_HOSTS = []
 
 # Application definition
 INSTALLED_APPS = [
-    "unfold",  # before django.contrib.admin
-    "unfold.contrib.filters",  # optional, if special filters are needed
-    "unfold.contrib.forms",  # optional, if special form elements are needed
+   
     # Django core
     "django.contrib.admin",
     "django.contrib.auth",
@@ -222,5 +220,6 @@ EMAIL_HOST_USER = 'syscomatic.technologies@gmail.com'
 EMAIL_HOST_PASSWORD = 'nckp gdyt pppw axch'
 
 FRONTEND_LOGIN_URL = 'http://localhost:4200/'
+
 
 

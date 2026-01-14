@@ -1,0 +1,2452 @@
+{
+	"info": {
+		"_postman_id": "b1b171b8-30ef-42ae-bd2d-d68caeb28df2",
+		"name": "IC Cleaner API",
+		"description": "Postman tests for IC Cleaner: admin_dashboard, cleaner, customer apps (function-based views). Set {{auth_token}} after obtaining a JWT.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "45165191",
+		"_collection_link": "https://zahedhasan.postman.co/workspace/Zahed-Hasan's-Workspace~d8d13a86-e09a-4bb6-8829-c2cdf2a46f9d/collection/45165191-b1b171b8-30ef-42ae-bd2d-d68caeb28df2?action=share&source=collection_link&creator=45165191"
+	},
+	"item": [
+		{
+			"name": "Admin Dashboard",
+			"item": [
+				{
+					"name": "Services",
+					"item": [
+						{
+							"name": "Services - Create (admin)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Window Cleaning\",\n    \"price_per_hour\": 25.50,\n    \"platform_fee_per_hour\": 5.00,\n    \"is_active\": true\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseURL}}/admin/super-admin/api/services/",
+									"host": [
+										"{{BaseURL}}"
+									],
+									"path": [
+										"admin",
+										"super-admin",
+										"api",
+										"services",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Services - List (public/filtered)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"200\",()=>pm.response.code===200);"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/super-admin/api/services/",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"super-admin",
+										"api",
+										"services",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Services - Retrieve",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"200\",()=>pm.response.code===200);"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BaseURL}}/super-admin/api/services/{{service_id}}/",
+									"host": [
+										"{{BaseURL}}"
+									],
+									"path": [
+										"super-admin",
+										"api",
+										"services",
+										"{{service_id}}",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Services - Partial Update (admin, PATCH)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"200\",()=>pm.response.code===200);"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"is_active\":false}"
+								},
+								"url": {
+									"raw": "{{base_url}}/super-admin/api/services/{{service_id}}/",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"super-admin",
+										"api",
+										"services",
+										"{{service_id}}",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Services - Update (admin, PUT)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"200\",()=>pm.response.code===200);"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"name\":\"Deep Clean - Updated\",\"price_per_hour\":40.00,\"platform_fee_per_hour\":6.00,\"is_active\":true}"
+								},
+								"url": {
+									"raw": "{{base_url}}/super-admin/api/services/{{service_id}}/",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"super-admin",
+										"api",
+										"services",
+										"{{service_id}}",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Cleaning Bookings - List (admin sees all; user sees own)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"200\",()=>pm.response.code===200);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/super-admin/api/cleaning-bookings/?status=pending&service={{service_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"super-admin",
+								"api",
+								"cleaning-bookings",
+								""
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "pending"
+								},
+								{
+									"key": "service",
+									"value": "{{service_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cleaning Bookings - Create (user)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"201\",()=>pm.response.code===201);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"booking_date\":\"2025-09-25\",\"time_slot\":\"10:00:00\",\"service\":{{service_id}},\"special_requirements\":\"No bleach\"}"
+						},
+						"url": {
+							"raw": "{{base_url}}/super-admin/api/cleaning-bookings/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"super-admin",
+								"api",
+								"cleaning-bookings",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cleaning Bookings - My Booking (user)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.expect([200,404]).to.include(pm.response.code);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/super-admin/api/cleaning-bookings/me/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"super-admin",
+								"api",
+								"cleaning-bookings",
+								"me",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cleaning Bookings - Retrieve",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"200\",()=>pm.response.code===200);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/super-admin/api/cleaning-bookings/{{booking_id}}/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"super-admin",
+								"api",
+								"cleaning-bookings",
+								"{{booking_id}}",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cleaning Bookings - Update (PATCH)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"200\",()=>pm.response.code===200);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"special_requirements\":\"Bring eco products\"}"
+						},
+						"url": {
+							"raw": "{{base_url}}/super-admin/api/cleaning-bookings/{{booking_id}}/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"super-admin",
+								"api",
+								"cleaning-bookings",
+								"{{booking_id}}",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cleaning Bookings - Assign Cleaner (admin)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.expect([200,400]).to.include(pm.response.code);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"assign_cleaner\": {{cleaner_id}} }"
+						},
+						"url": {
+							"raw": "{{base_url}}/super-admin/api/cleaning-bookings/{{booking_id}}/assign-cleaner/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"super-admin",
+								"api",
+								"cleaning-bookings",
+								"{{booking_id}}",
+								"assign-cleaner",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cleaning Bookings - Accept (assigned cleaner/admin)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.expect([200,400,403]).to.include(pm.response.code);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/super-admin/api/cleaning-bookings/{{booking_id}}/accept/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"super-admin",
+								"api",
+								"cleaning-bookings",
+								"{{booking_id}}",
+								"accept",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cleaning Bookings - Reject (assigned cleaner/admin)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.expect([200,400,403]).to.include(pm.response.code);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/super-admin/api/cleaning-bookings/{{booking_id}}/reject/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"super-admin",
+								"api",
+								"cleaning-bookings",
+								"{{booking_id}}",
+								"reject",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cleaning Bookings - Delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.expect([204,403,404]).to.include(pm.response.code);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/super-admin/api/cleaning-bookings/{{booking_id}}/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"super-admin",
+								"api",
+								"cleaning-bookings",
+								"{{booking_id}}",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Cleaner",
+			"item": [
+				{
+					"name": "Booking Management - List (table rows)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"200\",()=>pm.response.code===200);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/cleaner/api/cleaner/booking-management/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"cleaner",
+								"api",
+								"cleaner",
+								"booking-management",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Booking Management - Request Payout (accepted booking)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.expect([201,400,403]).to.include(pm.response.code);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"amount\":\"120.00\",\"payment_method\": {{pm_id}} }"
+						},
+						"url": {
+							"raw": "{{base_url}}/cleaner/api/cleaner/booking-management/{{booking_id}}/request-payout/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"cleaner",
+								"api",
+								"cleaner",
+								"booking-management",
+								"{{booking_id}}",
+								"request-payout",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reports - Cleaner KPIs & Charts",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"200\",()=>pm.response.code===200);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/cleaner/api/cleaner/reports/?range=30d&service_id={{service_id}}&location=London",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"cleaner",
+								"api",
+								"cleaner",
+								"reports",
+								""
+							],
+							"query": [
+								{
+									"key": "range",
+									"value": "30d"
+								},
+								{
+									"key": "service_id",
+									"value": "{{service_id}}"
+								},
+								{
+									"key": "location",
+									"value": "London"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Ratings - My Ratings (cleaner)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"200\",()=>pm.response.code===200);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/cleaner/api/cleaner/ratings/me/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"cleaner",
+								"api",
+								"cleaner",
+								"ratings",
+								"me",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Ratings - Create (customer/admin)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.expect([201,400,403]).to.include(pm.response.code);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"booking\": {{booking_id}}, \"rating\": 5, \"review\":\"Great job!\"}"
+						},
+						"url": {
+							"raw": "{{base_url}}/cleaner/api/cleaner/ratings/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"cleaner",
+								"api",
+								"cleaner",
+								"ratings",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Payment Methods - List/Create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"200\",()=>pm.response.code===200);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/cleaner/api/cleaner/payment-methods/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"cleaner",
+								"api",
+								"cleaner",
+								"payment-methods",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Payment Methods - Create PayPal",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.expect([201,400]).to.include(pm.response.code);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"method\":\"paypal\",\"paypal_email\":\"cleaner@example.com\",\"is_default\":true}"
+						},
+						"url": {
+							"raw": "{{base_url}}/cleaner/api/cleaner/payment-methods/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"cleaner",
+								"api",
+								"cleaner",
+								"payment-methods",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Payment Methods - Detail (GET)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.expect([200,403,404]).to.include(pm.response.code);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/cleaner/api/cleaner/payment-methods/{{pm_id}}/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"cleaner",
+								"api",
+								"cleaner",
+								"payment-methods",
+								"{{pm_id}}",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Payment Methods - Update (PATCH)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.expect([200,400,403]).to.include(pm.response.code);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"is_default\": true}"
+						},
+						"url": {
+							"raw": "{{base_url}}/cleaner/api/cleaner/payment-methods/{{pm_id}}/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"cleaner",
+								"api",
+								"cleaner",
+								"payment-methods",
+								"{{pm_id}}",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Payouts - List/Create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"200\",()=>pm.response.code===200);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/cleaner/api/cleaner/payouts/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"cleaner",
+								"api",
+								"cleaner",
+								"payouts",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Payouts - Create for Booking",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.expect([201,400,403]).to.include(pm.response.code);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"booking\": {{booking_id}}, \"payment_method\": {{pm_id}}, \"amount\": \"120.00\"}"
+						},
+						"url": {
+							"raw": "{{base_url}}/cleaner/api/cleaner/payouts/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"cleaner",
+								"api",
+								"cleaner",
+								"payouts",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Payouts - Detail (GET)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.expect([200,403,404]).to.include(pm.response.code);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/cleaner/api/cleaner/payouts/{{payout_id}}/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"cleaner",
+								"api",
+								"cleaner",
+								"payouts",
+								"{{payout_id}}",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Payouts - Update (PATCH)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.expect([200,400,403]).to.include(pm.response.code);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"amount\": \"140.00\"}"
+						},
+						"url": {
+							"raw": "{{base_url}}/cleaner/api/cleaner/payouts/{{payout_id}}/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"cleaner",
+								"api",
+								"cleaner",
+								"payouts",
+								"{{payout_id}}",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Payouts - Delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.expect([204,400,403]).to.include(pm.response.code);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/cleaner/api/cleaner/payouts/{{payout_id}}/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"cleaner",
+								"api",
+								"cleaner",
+								"payouts",
+								"{{payout_id}}",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Payouts - Admin: Approve",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.expect([200,403,404]).to.include(pm.response.code);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/cleaner/api/cleaner/payouts/{{payout_id}}/approve/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"cleaner",
+								"api",
+								"cleaner",
+								"payouts",
+								"{{payout_id}}",
+								"approve",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Payouts - Admin: Mark Paid",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.expect([200,403,404]).to.include(pm.response.code);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/cleaner/api/cleaner/payouts/{{payout_id}}/paid/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"cleaner",
+								"api",
+								"cleaner",
+								"payouts",
+								"{{payout_id}}",
+								"paid",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Payouts - Admin: Reject",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.expect([200,403,404]).to.include(pm.response.code);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/cleaner/api/cleaner/payouts/{{payout_id}}/reject/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"cleaner",
+								"api",
+								"cleaner",
+								"payouts",
+								"{{payout_id}}",
+								"reject",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Payouts - Admin: Set Pending",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.expect([200,403,404]).to.include(pm.response.code);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/cleaner/api/cleaner/payouts/{{payout_id}}/pending/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"cleaner",
+								"api",
+								"cleaner",
+								"payouts",
+								"{{payout_id}}",
+								"pending",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Disputes - List/Create for Payout",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"200\",()=>pm.response.code===200);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/cleaner/payouts/{{payout_id}}/disputes/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"cleaner",
+								"payouts",
+								"{{payout_id}}",
+								"disputes",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Disputes - Create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.expect([201,400,403]).to.include(pm.response.code);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"title\":\"Amount mismatch\",\"description\":\"Expected £140\"}"
+						},
+						"url": {
+							"raw": "{{base_url}}/cleaner/api/cleaner/payouts/{{payout_id}}/disputes/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"cleaner",
+								"api",
+								"cleaner",
+								"payouts",
+								"{{payout_id}}",
+								"disputes",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Disputes - Admin Resolve (PATCH)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.expect([200,403,404]).to.include(pm.response.code);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"status\":\"resolved\"}"
+						},
+						"url": {
+							"raw": "{{base_url}}/cleaner/api/cleaner/payouts/{{payout_id}}/disputes/{{dispute_id}}/resolve/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"cleaner",
+								"api",
+								"cleaner",
+								"payouts",
+								"{{payout_id}}",
+								"disputes",
+								"{{dispute_id}}",
+								"resolve",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Customer",
+			"item": [
+				{
+					"name": "Payment Methods - List/Create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"200\",()=>pm.response.code===200);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/customer/api/customer/payment-methods/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"customer",
+								"api",
+								"customer",
+								"payment-methods",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Payment Methods - Add (attach after Stripe)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.expect([201,400]).to.include(pm.response.code);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"stripe_customer_id\":\"cus_test_123\",\"stripe_payment_method_id\":\"pm_test_123\",\"brand\":\"visa\",\"last4\":\"4242\",\"exp_month\":12,\"exp_year\":2030,\"is_default\":true}"
+						},
+						"url": {
+							"raw": "{{base_url}}/customer/api/customer/payment-methods/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"customer",
+								"api",
+								"customer",
+								"payment-methods",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Payment Methods - Set Default",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.expect([200,403,404]).to.include(pm.response.code);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/customer/api/customer/payment-methods/{{pm_id}}/default/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"customer",
+								"api",
+								"customer",
+								"payment-methods",
+								"{{pm_id}}",
+								"default",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Payment Methods - Delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.expect([204,403,404]).to.include(pm.response.code);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/customer/api/customer/payment-methods/{{pm_id}}/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"customer",
+								"api",
+								"customer",
+								"payment-methods",
+								"{{pm_id}}",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Bookings - List/Create (customer)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"200\",()=>pm.response.code===200);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/customer/api/customer/bookings/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"customer",
+								"api",
+								"customer",
+								"bookings",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Bookings - Create (requires default card)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.expect([201,400]).to.include(pm.response.code);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"location\":\"221B Baker Street, London\",\"booking_date\":\"2025-09-25\",\"time_slot\":\"14:00:00\",\"service\": {{service_id}},\"choose_cleaner\": {{cleaner_id}},\"special_requirements\":\"Eco products only\"}"
+						},
+						"url": {
+							"raw": "{{base_url}}/customer/api/customer/bookings/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"customer",
+								"api",
+								"customer",
+								"bookings",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Bookings - Retrieve (customer)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.expect([200,403,404]).to.include(pm.response.code);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/customer/api/customer/bookings/{{cust_booking_id}}/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"customer",
+								"api",
+								"customer",
+								"bookings",
+								"{{cust_booking_id}}",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Bookings - Update (PATCH)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.expect([200,400,403]).to.include(pm.response.code);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"special_requirements\":\"Please bring vacuum\"}"
+						},
+						"url": {
+							"raw": "{{base_url}}/customer/api/customer/bookings/{{cust_booking_id}}/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"customer",
+								"api",
+								"customer",
+								"bookings",
+								"{{cust_booking_id}}",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Bookings - Delete (customer)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.expect([204,403,404]).to.include(pm.response.code);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/customer/api/customer/bookings/{{cust_booking_id}}/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"customer",
+								"api",
+								"customer",
+								"bookings",
+								"{{cust_booking_id}}",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "adminRegister",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"first_name\": \"John\",\n    \"last_name\": \"Doe\",\n    \"email\": \"rafay89919@erynka.com\",\n    \"phone_number\": \"+8801712345628\",\n    \"password\": \"Admin@123\",\n    \"password_confirm\": \"Admin@123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/auths/api/register/admin/",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"auths",
+								"api",
+								"register",
+								"admin",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"first_name\": \"John\",\n    \"last_name\": \"Doe\",\n    \"email\": \"bejasa1542@fintehs.com\",\n    \"phone_number\": \"+8801712345678\",\n    \"password\": \"Admin@123\",\n    \"password_confirm\": \"Admin@123\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseURL}}/auths/api/register/admin/",
+									"host": [
+										"{{BaseURL}}"
+									],
+									"path": [
+										"auths",
+										"api",
+										"register",
+										"admin",
+										""
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 07 Oct 2025 09:30:19 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.13.7"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Allow",
+									"value": "OPTIONS, POST"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "88"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Admin registered. OTP sent to your email.\",\n    \"email\": \"bejasa1542@fintehs.com\"\n}"
+						}
+					]
+				},
+				{
+					"name": "customerRegister",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"first_name\": \"Zahed Customer\",\n    \"last_name\": \"Hasan\",\n    \"email\": \"cefap34062@fintehs.com\",\n    \"phone_number\": \"+8801799999992\",\n    \"password\": \"Customer@123\",\n    \"password_confirm\": \"Customer@123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/auths/api/register/customer/",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"auths",
+								"api",
+								"register",
+								"customer",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"first_name\": \"Zahed Customer\",\n    \"last_name\": \"Hasan\",\n    \"email\": \"cefap34062@fintehs.com\",\n    \"phone_number\": \"+8801799999992\",\n    \"password\": \"Customer@123\",\n    \"password_confirm\": \"Customer@123\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseURL}}/auths/api/register/customer/",
+									"host": [
+										"{{BaseURL}}"
+									],
+									"path": [
+										"auths",
+										"api",
+										"register",
+										"customer",
+										""
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 07 Oct 2025 09:59:56 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.13.7"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Allow",
+									"value": "POST, OPTIONS"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "91"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Customer registered. OTP sent to your email.\",\n    \"email\": \"cefap34062@fintehs.com\"\n}"
+						}
+					]
+				},
+				{
+					"name": "cleanerRegistration",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"first_name\": \"Sajid\",\n    \"last_name\": \"Hossain\",\n    \"email\": \"dodoge8323@erynka.com\",\n    \"phone_number\": \"+8801888888888\",\n    \"password\": \"Cleaner@123\",\n    \"password_confirm\": \"Cleaner@123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/auths/api/register/cleaner/",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"auths",
+								"api",
+								"register",
+								"cleaner",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"first_name\": \"Sajid\",\n    \"last_name\": \"Hossain\",\n    \"email\": \"dodoge8323@erynka.com\",\n    \"phone_number\": \"+8801888888888\",\n    \"password\": \"Cleaner@123\",\n    \"password_confirm\": \"Cleaner@123\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseURL}}/auths/api/register/cleaner/",
+									"host": [
+										"{{BaseURL}}"
+									],
+									"path": [
+										"auths",
+										"api",
+										"register",
+										"cleaner",
+										""
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 07 Oct 2025 10:05:30 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.13.7"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Allow",
+									"value": "POST, OPTIONS"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "89"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Cleaner registered. OTP sent to your email.\",\n    \"email\": \"dodoge8323@erynka.com\"\n}"
+						}
+					]
+				},
+				{
+					"name": "verifyOTP",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"dodoge8323@erynka.com\",\n    \"otp\": \"554403\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/auths/api/verify-email-otp/",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"auths",
+								"api",
+								"verify-email-otp",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"bejasa1542@fintehs.com\",\n    \"otp\": \"944302\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseURL}}/auths/api/verify-email-otp/",
+									"host": [
+										"{{BaseURL}}"
+									],
+									"path": [
+										"auths",
+										"api",
+										"verify-email-otp",
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 07 Oct 2025 09:32:55 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.13.7"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Allow",
+									"value": "OPTIONS, POST"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "42"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Email verified successfully.\"\n}"
+						}
+					]
+				},
+				{
+					"name": "token",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"dodoge8323@erynka.com\",\n    \"password\": \"NewPass@123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/auths/api/login/",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"auths",
+								"api",
+								"login",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"rafay89919@erynka.com\",\n    \"password\": \"Admin@123\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseURL}}/auths/api/login/",
+									"host": [
+										"{{BaseURL}}"
+									],
+									"path": [
+										"auths",
+										"api",
+										"login",
+										""
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 07 Oct 2025 09:51:36 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.13.7"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Allow",
+									"value": "POST, OPTIONS"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1176"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Successfully logged in.\",\n    \"user\": {\n        \"id\": 3,\n        \"username\": \"rafay89919@erynka.com\",\n        \"email\": \"rafay89919@erynka.com\",\n        \"first_name\": \"John\",\n        \"last_name\": \"Doe\",\n        \"is_active\": true,\n        \"phone_number\": \"+8801712345628\",\n        \"role\": \"admin\",\n        \"status\": \"approved\",\n        \"is_verified\": true,\n        \"dba_verification\": false,\n        \"rating\": \"0.00\",\n        \"total_services_done\": 0,\n        \"pending_services\": 0,\n        \"on_hold_services\": 0,\n        \"dba_document\": null,\n        \"profile_picture\": null,\n        \"date_of_birth\": null,\n        \"emergency_contact\": \"\",\n        \"address_line1\": \"\",\n        \"address_line2\": \"\",\n        \"city\": \"\",\n        \"state\": \"\",\n        \"zip_code\": \"\",\n        \"country\": \"USA\",\n        \"email_notifications\": true,\n        \"sms_notifications\": true,\n        \"created_at\": \"2025-10-07T09:39:47.295547Z\",\n        \"updated_at\": \"2025-10-07T09:39:47.415524Z\",\n        \"access_token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzYwMjYyNjk2LCJpYXQiOjE3NTk4MzA2OTYsImp0aSI6IjQwMGExMmIyYmZiNjRkMjNhOTI3MzhkMjhjNGNhYmNiIiwidXNlcl9pZCI6M30.O4-lLuqEJEq3HZ5CVwYDRZhv0q7M0CgRfyOKRNyXk1g\",\n        \"refresh_token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc2MDAwMzQ5NiwiaWF0IjoxNzU5ODMwNjk2LCJqdGkiOiIyYzVlYmQwZWI2YTU0OWVjOWI0YWI1MzViMWI1MzM1YyIsInVzZXJfaWQiOjN9.CPxNtzCP5shG0tZ0j-QsGD_e2BoCZCpYbSdl9aChBEg\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "forgetPassword",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"dodoge8323@erynka.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/auths/api/password/forgot/",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"auths",
+								"api",
+								"password",
+								"forgot",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"dodoge8323@erynka.com\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseURL}}/auths/api/password/forgot/",
+									"host": [
+										"{{BaseURL}}"
+									],
+									"path": [
+										"auths",
+										"api",
+										"password",
+										"forgot",
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 07 Oct 2025 10:06:55 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.13.7"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Allow",
+									"value": "POST, OPTIONS"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "57"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"If this email exists, an OTP has been sent.\"\n}"
+						}
+					]
+				},
+				{
+					"name": "resetPassword",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"dodoge8323@erynka.com\",\n    \"otp\": \"415921\",\n    \"new_password\": \"NewPass@123\",\n    \"confirm_new_password\": \"NewPass@123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/auths/api/password/reset/",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"auths",
+								"api",
+								"password",
+								"reset",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"dodoge8323@erynka.com\",\n    \"otp\": \"415921\",\n    \"new_password\": \"NewPass@123\",\n    \"confirm_new_password\": \"NewPass@123\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseURL}}/auths/api/password/reset/",
+									"host": [
+										"{{BaseURL}}"
+									],
+									"path": [
+										"auths",
+										"api",
+										"password",
+										"reset",
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 07 Oct 2025 10:07:41 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.13.7"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Allow",
+									"value": "POST, OPTIONS"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "51"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Password has been reset successfully.\"\n}"
+						}
+					]
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

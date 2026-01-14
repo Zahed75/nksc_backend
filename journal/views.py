@@ -26,7 +26,7 @@ class JournalCreateAPIView(APIView):
     def post(self, request):
         serializer = JournalSerializer(
             data=request.data,
-            context={"request": request},
+            context={"request": request},  # Request context is passed here
         )
 
         if serializer.is_valid():
@@ -37,7 +37,7 @@ class JournalCreateAPIView(APIView):
                     "message": "Journal created successfully",
                     "data": JournalSerializer(
                         journal,
-                        context={"request": request},
+                        context={"request": request},  # Request context is passed here
                     ).data,
                 },
                 status=status.HTTP_201_CREATED,
@@ -80,7 +80,7 @@ class JournalUpdateAPIView(APIView):
                 status=status.HTTP_404_NOT_FOUND,
             )
 
-        serializer = JournalSerializer(journal, data=request.data, partial=True)
+        serializer = JournalSerializer(journal, data=request.data, partial=True, context={"request": request})
         if serializer.is_valid():
             serializer.save()
             return Response(
@@ -111,31 +111,17 @@ class JournalListAPIView(APIView):
     )
     def get(self, request):
         journals = Journal.objects.filter(is_published=True).order_by("-created_at")
-        serializer = JournalSerializer(journals, many=True)
-
-        return Response(
-            {
-                "code": status.HTTP_200_OK,
-                "data": serializer.data,
-            }
+        
+        # Pass request context to serializer
+        serializer = JournalSerializer(
+            journals, 
+            many=True, 
+            context={"request": request}  # ADD THIS LINE
         )
-
-
-class JournalListAPIView(APIView):
-    permission_classes = [AllowAny]
-
-    @extend_schema(
-        responses={200: JournalSerializer(many=True)},
-        summary="List Journals",
-        description="Public API – list all published journals",
-    )
-    def get(self, request):
-        journals = Journal.objects.filter(is_published=True).order_by("-created_at")
-
-        serializer = JournalSerializer(journals, many=True)
+        
         return Response(
             {
-                "message": "Get all journals",
+                "message": "Journals retrieved successfully",
                 "code": status.HTTP_200_OK,
                 "data": serializer.data,
             }
