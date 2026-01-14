@@ -23,6 +23,9 @@ ALLOWED_HOSTS = []
 
 # Application definition
 INSTALLED_APPS = [
+    "unfold",  # before django.contrib.admin
+    "unfold.contrib.filters",  # optional, if special filters are needed
+    "unfold.contrib.forms",  # optional, if special form elements are needed
     # Django core
     "django.contrib.admin",
     "django.contrib.auth",
@@ -62,7 +65,7 @@ ROOT_URLCONF = 'nksc_backend.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [TEMPLATES_DIR],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -133,10 +136,10 @@ REST_FRAMEWORK = {
 }
 
 SPECTACULAR_SETTINGS = {
-    "TITLE": "Nazmul Karim Study Center API",
-    "DESCRIPTION": "NKSC Backend APIs",
+    "TITLE": "Nazmul Karim Study-Center API University Of Dhaka ",
+    "DESCRIPTION": "NKSC Backend APIs-Zahed Hasan",
     "VERSION": "1.0.0",
-    "SERVE_INCLUDE_SCHEMA": False,
+    "SERVE_INCLUDE_SCHEMA": True,
 }
 
 
@@ -219,3 +222,5 @@ EMAIL_HOST_USER = 'syscomatic.technologies@gmail.com'
 EMAIL_HOST_PASSWORD = 'nckp gdyt pppw axch'
 
 FRONTEND_LOGIN_URL = 'http://localhost:4200/'
+
+

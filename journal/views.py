@@ -13,13 +13,6 @@ from .models import Journal
 from .serializers import JournalSerializer
 
 
-
-
-
-
-
-
-
 class JournalCreateAPIView(APIView):
     # permission_classes = [IsAuthenticated]
     parser_classes = [MultiPartParser, FormParser]
@@ -60,11 +53,8 @@ class JournalCreateAPIView(APIView):
         )
 
 
-
-
-
 class JournalUpdateAPIView(APIView):
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
     parser_classes = [MultiPartParser, FormParser]
 
     @extend_schema(
@@ -95,8 +85,8 @@ class JournalUpdateAPIView(APIView):
             serializer.save()
             return Response(
                 {
-                    "code": status.HTTP_200_OK,
                     "message": "Journal updated successfully",
+                    "code": status.HTTP_200_OK,
                     "data": serializer.data,
                 }
             )
@@ -111,7 +101,6 @@ class JournalUpdateAPIView(APIView):
         )
 
 
-
 class JournalListAPIView(APIView):
     permission_classes = [AllowAny]
 
@@ -132,9 +121,6 @@ class JournalListAPIView(APIView):
         )
 
 
-
-
-
 class JournalListAPIView(APIView):
     permission_classes = [AllowAny]
 
@@ -145,23 +131,19 @@ class JournalListAPIView(APIView):
     )
     def get(self, request):
         journals = Journal.objects.filter(is_published=True).order_by("-created_at")
+
         serializer = JournalSerializer(journals, many=True)
         return Response(
             {
+                "message": "Get all journals",
                 "code": status.HTTP_200_OK,
                 "data": serializer.data,
             }
         )
-
-
-
-
-
-
 
 
 class JournalDeleteAPIView(APIView):
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
 
     @extend_schema(
         parameters=[
