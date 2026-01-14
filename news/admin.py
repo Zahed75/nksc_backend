@@ -19,9 +19,9 @@ class NewsAdminForm(forms.ModelForm):
 
 
 class NewsCategoryAdmin(admin.ModelAdmin):
-    list_display = ('name', 'slug', 'news_count')
+    list_display = ('id','name', 'slug', 'news_count')
     list_display_links = ('name', 'slug')
-    search_fields = ('name', 'description')
+    search_fields = ('id','name', 'description')
     prepopulated_fields = {'slug': ('name',)}
     fields = ('name', 'slug', 'description')
     
