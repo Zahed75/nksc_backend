@@ -33,6 +33,7 @@ urlpatterns = [
     path("api/publications/", include("publications.urls")),
     path("api/media-staff/", include("media_stuff.urls")),
     path("api/user-management/", include("user_management.urls")),
+    path("api/news/", include("news.urls")),
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

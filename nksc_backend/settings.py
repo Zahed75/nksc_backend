@@ -1,3 +1,6 @@
+import logging
+from datetime import timedelta
+from pathlib import Path
 import os
 import pymysql
 
@@ -5,8 +8,6 @@ import pymysql
 pymysql.version_info = (2, 2, 1, "final", 0)
 pymysql.install_as_MySQLdb()
 
-from pathlib import Path
-from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -23,7 +24,7 @@ ALLOWED_HOSTS = []
 
 # Application definition
 INSTALLED_APPS = [
-   
+
     # Django core
     "django.contrib.admin",
     "django.contrib.auth",
@@ -33,12 +34,13 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
 
     # Third-party
-    "rest_framework", 
-    'rest_framework_simplejwt',   
+    "rest_framework",
+    'rest_framework_simplejwt',
     "drf_spectacular",
     "corsheaders",
-          
+
     "django_cleanup.apps.CleanupConfig",
+    "ckeditor",
 
     "journal",
     "media_stuff",
@@ -119,8 +121,6 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-
-
 REST_FRAMEWORK = {
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
     "DEFAULT_AUTHENTICATION_CLASSES": (
@@ -142,7 +142,6 @@ SPECTACULAR_SETTINGS = {
 
 
 # Optional: Suppress warnings
-import logging
 
 logging.getLogger('drf_spectacular').setLevel(logging.ERROR)
 
@@ -223,3 +222,44 @@ FRONTEND_LOGIN_URL = 'http://localhost:4200/'
 
 
 
+
+# CKEditor Configuration
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'full',
+        'height': 400,
+        'width': '100%',
+        'extraPlugins': ','.join([
+            'codesnippet',
+            'widget',
+            'dialog',
+        ]),
+        'toolbar_Custom': [
+            ['Bold', 'Italic', 'Underline', 'Strike'],
+            ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote'],
+            ['Link', 'Unlink', 'Anchor'],
+            ['Image', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar'],
+            ['Styles', 'Format', 'Font', 'FontSize'],
+            ['TextColor', 'BGColor'],
+            ['Maximize', 'ShowBlocks'],
+            ['CodeSnippet', 'Source'],
+        ],
+        'codeSnippet_theme': 'monokai',
+    },
+    'minimal': {
+        'toolbar': [
+            ['Bold', 'Italic', 'Underline', 'Strike'],
+            ['NumberedList', 'BulletedList'],
+            ['Link', 'Unlink'],
+            ['RemoveFormat', 'Source']
+        ],
+        'height': 150,
+        'width': '100%',
+    }
+}
+
+# CKEditor upload path
+CKEDITOR_UPLOAD_PATH = "uploads/"
+CKEDITOR_IMAGE_BACKEND = "pillow"
+CKEDITOR_ALLOW_NONIMAGE_FILES = False
+CKEDITOR_RESTRICT_BY_USER = True
