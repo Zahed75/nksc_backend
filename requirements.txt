@@ -1,12 +1,15 @@
 asgiref==3.8.1
 attrs==25.4.0
 Django==4.2.11
+django-ckeditor==6.7.3
 django-cleanup==9.0.0
 django-cors-headers==4.7.0
 django-filter==23.5
+django-js-asset==3.1.2
 djangorestframework==3.14.0
 djangorestframework_simplejwt==5.5.0
 docopt==0.6.2
+dotenv==0.9.9
 drf-spectacular==0.28.0
 inflection==0.5.1
 jsonschema==4.26.0
@@ -15,6 +18,7 @@ Markdown==3.5.2
 pillow==12.1.0
 PyJWT==2.9.0
 PyMySQL==1.1.1
+python-dotenv==1.2.1
 pytz==2025.2
 PyYAML==6.0.3
 referencing==0.37.0
@@ -22,3 +26,4 @@ rpds-py==0.30.0
 sqlparse==0.4.4
 tzdata==2025.3
 uritemplate==4.2.0
+whitenoise==6.11.0

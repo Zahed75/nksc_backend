@@ -14,6 +14,7 @@ RUN apt-get update && apt-get install -y \
     g++ \
     default-libmysqlclient-dev \
     pkg-config \
+    curl \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy requirements
@@ -29,19 +30,12 @@ COPY . .
 # Create directories
 RUN mkdir -p media staticfiles logs
 
-# Collect static files
-RUN python manage.py collectstatic --noinput
-
 # Create non-root user
 RUN useradd -m -u 1000 django && chown -R django:django /app
 USER django
 
 # Expose port
 EXPOSE 8000
-
-# Health check
-HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-    CMD python -c "import urllib.request; urllib.request.urlopen('http://localhost:8000/api/about/')"
 
 # Run Gunicorn
 CMD ["gunicorn", "--bind", "0.0.0.0:8000", "--workers", "3", "--timeout", "120", "nksc_backend.wsgi:application"]
