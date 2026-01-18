@@ -264,6 +264,19 @@
 # CKEDITOR_RESTRICT_BY_USER = True
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 import logging
 from datetime import timedelta
 from pathlib import Path
@@ -359,34 +372,33 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'nksc_backend.wsgi.application'
 
-# Database configuration
+# Database configuration - FIXED VERSION
 if PRODUCTION:
-
-
+    # Production database (uses DATABASE_* variables)
     DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.getenv('DATABASE_NAME', os.getenv('DEV_DB_NAME', 'nksc_db')),
-        'USER': os.getenv('DATABASE_USER', os.getenv('DEV_DB_USER', 'root')),
-        'PASSWORD': os.getenv('DATABASE_PASSWORD', os.getenv('DEV_DB_PASSWORD', '')),
-        'HOST': os.getenv('DATABASE_HOST', os.getenv('DEV_DB_HOST', 'nksc-mysql')),
-        'PORT': os.getenv('DATABASE_PORT', os.getenv('DEV_DB_PORT', '3306')),
-        'OPTIONS': {
-            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
-            'charset': 'utf8mb4',
-        }
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': os.getenv('DATABASE_NAME', 'nksc_db'),
+            'USER': os.getenv('DATABASE_USER', 'root'),
+            'PASSWORD': os.getenv('DATABASE_PASSWORD', 'rootpassword'),
+            'HOST': os.getenv('DATABASE_HOST', 'nksc-mysql'),
+            'PORT': os.getenv('DATABASE_PORT', '3306'),
+            'OPTIONS': {
+                'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+                'charset': 'utf8mb4',
+            }
         }
     }
- 
+    print(f"PRODUCTION MODE: Using database host: {os.getenv('DATABASE_HOST', 'nksc-mysql')}")
 else:
-    # Development database (MySQL from .env or defaults)
+    # Development database (uses DEV_DB_* variables)
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
             'NAME': os.getenv('DEV_DB_NAME', 'nksc_db'),
             'USER': os.getenv('DEV_DB_USER', 'root'),
-            'PASSWORD': os.getenv('DEV_DB_PASSWORD', ''),
-            'HOST': os.getenv('DEV_DB_HOST', 'localhost'),
+            'PASSWORD': os.getenv('DEV_DB_PASSWORD', 'rootpassword'),
+            'HOST': os.getenv('DEV_DB_HOST', 'nksc-mysql'),  # Fixed: default to nksc-mysql
             'PORT': os.getenv('DEV_DB_PORT', '3306'),
             'OPTIONS': {
                 'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
@@ -394,6 +406,7 @@ else:
             }
         }
     }
+    print(f"DEVELOPMENT MODE: Using database host: {os.getenv('DEV_DB_HOST', 'nksc-mysql')}")
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
