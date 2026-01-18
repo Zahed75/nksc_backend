@@ -1,4 +1,4 @@
-# Dockerfile
+# Updated Dockerfile
 FROM python:3.11-slim
 
 # Set environment variables
@@ -27,13 +27,13 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy project
 COPY . .
 
-# Create directories and set permissions
+# Create directories with proper permissions
 RUN mkdir -p media staticfiles logs && \
-    chmod -R 755 media staticfiles logs
+    chown -R 1000:1000 /app && \
+    chmod -R 755 /app
 
 # Create non-root user
-RUN useradd -m -u 1000 django && \
-    chown -R django:django /app
+RUN useradd -m -u 1000 django
 
 USER django
 
