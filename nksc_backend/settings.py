@@ -222,8 +222,6 @@
 # FRONTEND_LOGIN_URL = 'http://localhost:4200/'
 
 
-
-
 # # CKEditor Configuration
 # CKEDITOR_CONFIGS = {
 #     'default': {
@@ -266,14 +264,6 @@
 # CKEDITOR_RESTRICT_BY_USER = True
 
 
-
-
-
-
-
-
-
-
 import logging
 from datetime import timedelta
 from pathlib import Path
@@ -302,7 +292,8 @@ os.makedirs(os.path.join(BASE_DIR, 'staticfiles'), exist_ok=True)
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # Get from .env, fallback to development key
-SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-1gm7eozzeu3ac8c6_rycbegs6x3*hxu%z_^bnthml(qrhr%50_')
+SECRET_KEY = os.getenv(
+    'SECRET_KEY', 'django-insecure-1gm7eozzeu3ac8c6_rycbegs6x3*hxu%z_^bnthml(qrhr%50_')
 
 # Get DEBUG and PRODUCTION from .env
 DEBUG = os.getenv('DEBUG', 'True').lower() == 'true'
@@ -372,20 +363,21 @@ WSGI_APPLICATION = 'nksc_backend.wsgi.application'
 if PRODUCTION:
     # Production database (MySQL from .env)
     # Database configuration
+ # Database configuration
     DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.getenv('DATABASE_NAME', 'nksc_db'),
-        'USER': os.getenv('DATABASE_USER', 'root'),
-        'PASSWORD': os.getenv('DATABASE_PASSWORD', ''),
-        'HOST': os.getenv('DATABASE_HOST', 'localhost'),
-        'PORT': os.getenv('DATABASE_PORT', '3306'),
-        'OPTIONS': {
-            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
-            'charset': 'utf8mb4',
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': os.getenv('DATABASE_NAME', 'nksc_db'),
+            'USER': os.getenv('DATABASE_USER', 'root'),
+            'PASSWORD': os.getenv('DATABASE_PASSWORD', ''),
+            'HOST': os.getenv('DATABASE_HOST', 'localhost'),
+            'PORT': os.getenv('DATABASE_PORT', '3306'),
+            'OPTIONS': {
+                'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+                'charset': 'utf8mb4',
+            }
         }
     }
-}
 else:
     # Development database (MySQL from .env or defaults)
     DATABASES = {
@@ -482,8 +474,10 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = MEDIA_DIR
 
 # CSRF and CORS settings from .env
-CSRF_TRUSTED_ORIGINS = os.getenv('CSRF_TRUSTED_ORIGINS', 'http://localhost:4200,http://localhost:4300,http://localhost:3000').split(',')
-CORS_ALLOWED_ORIGINS = os.getenv('CORS_ALLOWED_ORIGINS', 'http://localhost:4200,http://localhost:4300,http://localhost:3000').split(',')
+CSRF_TRUSTED_ORIGINS = os.getenv(
+    'CSRF_TRUSTED_ORIGINS', 'http://localhost:4200,http://localhost:4300,http://localhost:3000').split(',')
+CORS_ALLOWED_ORIGINS = os.getenv(
+    'CORS_ALLOWED_ORIGINS', 'http://localhost:4200,http://localhost:4300,http://localhost:3000').split(',')
 CORS_ALLOW_CREDENTIALS = True
 
 # Security settings based on PRODUCTION flag
@@ -508,7 +502,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = os.getenv('EMAIL_HOST', 'smtp.gmail.com')
 EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS', 'True').lower() == 'true'
 EMAIL_PORT = int(os.getenv('EMAIL_PORT', '587'))
-EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', 'syscomatic.technologies@gmail.com')
+EMAIL_HOST_USER = os.getenv(
+    'EMAIL_HOST_USER', 'syscomatic.technologies@gmail.com')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', 'nckp gdyt pppw axch')
 
 FRONTEND_LOGIN_URL = os.getenv('FRONTEND_LOGIN_URL', 'http://localhost:4200/')
@@ -526,7 +521,8 @@ CKEDITOR_CONFIGS = {
         ]),
         'toolbar_Custom': [
             ['Bold', 'Italic', 'Underline', 'Strike'],
-            ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote'],
+            ['NumberedList', 'BulletedList', '-',
+                'Outdent', 'Indent', '-', 'Blockquote'],
             ['Link', 'Unlink', 'Anchor'],
             ['Image', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar'],
             ['Styles', 'Format', 'Font', 'FontSize'],

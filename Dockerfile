@@ -1,4 +1,4 @@
-# Updated Dockerfile
+# Dockerfile
 FROM python:3.11-slim
 
 # Set environment variables
@@ -35,6 +35,7 @@ RUN mkdir -p media staticfiles logs && \
 # Create non-root user
 RUN useradd -m -u 1000 django
 
+# Switch to non-root user
 USER django
 
 # Expose port
