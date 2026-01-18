@@ -365,19 +365,16 @@ if PRODUCTION:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
-            'NAME': os.getenv('DATABASE_NAME', 'nksc_db'),
-            'USER': os.getenv('DATABASE_USER', 'root'),
-            'PASSWORD': os.getenv('DATABASE_PASSWORD', 'Nksc@2026'),
-            'HOST': os.getenv('DATABASE_HOST', 'nksc-mysql'),
-            'PORT': os.getenv('DATABASE_PORT', '3306'),
+            'NAME': 'nksc_db',
+            'USER': 'nksc_user',  # Use nksc_user instead of root
+            'PASSWORD': 'Nksc@2026',
+            'HOST': 'nksc-mysql',
+            'PORT': '3306',
             'OPTIONS': {
-                'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
                 'charset': 'utf8mb4',
             }
         }
     }
-    print(
-        f"PRODUCTION MODE: Using database host: {os.getenv('DATABASE_HOST', 'nksc-mysql')}")
 else:
     # Development database (uses DEV_DB_* variables)
     DATABASES = {

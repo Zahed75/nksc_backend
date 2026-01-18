@@ -1,6 +1,4 @@
-# docker-compose.yml - SIMPLE VERSION
-version: '3.8'
-
+# docker-compose.yml
 services:
   nksc-mysql:
     image: mysql:8.0
@@ -13,15 +11,13 @@ services:
       MYSQL_PASSWORD: Nksc@2026
     volumes:
       - mysql_data:/var/lib/mysql
-    command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    # ADD THIS COMMAND LINE:
+    command: 
+      - --default-authentication-plugin=mysql_native_password
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
     networks:
       - nksc-network
-    healthcheck:
-      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root -pNksc@2026 || exit 1"]
-      interval: 10s
-      timeout: 5s
-      retries: 10
-      start_period: 40s
 
   nksc-backend:
     build: .
@@ -37,20 +33,20 @@ services:
       - DATABASE_HOST=nksc-mysql
       - DATABASE_PORT=3306
       - DATABASE_NAME=nksc_db
-      - DATABASE_USER=root
+      - DATABASE_USER=nksc_user  # CHANGE FROM 'root' to 'nksc_user'
       - DATABASE_PASSWORD=Nksc@2026
       - PRODUCTION=True
-      - DEBUG=True  # Keep True for debugging
+      - DEBUG=True
     depends_on:
       nksc-mysql:
-        condition: service_healthy
-    networks:
-      - nksc-network
-    # Simple command - remove wait_for_db temporarily
+        condition: service_started
+    # Change command to wait for MySQL
     command: >
-      sh -c "sleep 10 && 
+      sh -c "sleep 15 &&
              python manage.py migrate --noinput &&
              gunicorn --bind 0.0.0.0:8000 --workers 3 --timeout 120 nksc_backend.wsgi:application"
+    networks:
+      - nksc-network
 
   nksc-redis:
     image: redis:alpine
