@@ -27,11 +27,14 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy project
 COPY . .
 
-# Create directories
-RUN mkdir -p media staticfiles logs
+# Create directories and set permissions
+RUN mkdir -p media staticfiles logs && \
+    chmod -R 755 media staticfiles logs
 
 # Create non-root user
-RUN useradd -m -u 1000 django && chown -R django:django /app
+RUN useradd -m -u 1000 django && \
+    chown -R django:django /app
+
 USER django
 
 # Expose port
