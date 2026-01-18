@@ -371,20 +371,21 @@ WSGI_APPLICATION = 'nksc_backend.wsgi.application'
 # Database configuration
 if PRODUCTION:
     # Production database (MySQL from .env)
+    # Database configuration
     DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.mysql',
-            'NAME': os.getenv('PROD_DB_NAME', 'nksc_db'),
-            'USER': os.getenv('PROD_DB_USER', 'root'),
-            'PASSWORD': os.getenv('PROD_DB_PASSWORD', ''),
-            'HOST': os.getenv('PROD_DB_HOST', 'localhost'),
-            'PORT': os.getenv('PROD_DB_PORT', '3306'),
-            'OPTIONS': {
-                'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
-                'charset': 'utf8mb4',
-            }
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': os.getenv('DATABASE_NAME', 'nksc_db'),
+        'USER': os.getenv('DATABASE_USER', 'root'),
+        'PASSWORD': os.getenv('DATABASE_PASSWORD', ''),
+        'HOST': os.getenv('DATABASE_HOST', 'localhost'),
+        'PORT': os.getenv('DATABASE_PORT', '3306'),
+        'OPTIONS': {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+            'charset': 'utf8mb4',
         }
     }
+}
 else:
     # Development database (MySQL from .env or defaults)
     DATABASES = {
