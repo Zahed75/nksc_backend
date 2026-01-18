@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     "staff",
     "publications",
     "user_management",
+    "about",
 ]
 
 MIDDLEWARE = [

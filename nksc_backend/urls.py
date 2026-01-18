@@ -36,6 +36,7 @@ urlpatterns = [
     path("api/news/", include("news.urls")),
     path('api/gallery/', include('media_stuff.urls')),
     path('api/staff/', include('staff.urls')),
+    path('api/about/', include('about.urls')),
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

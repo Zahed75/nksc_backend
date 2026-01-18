@@ -1,0 +1,339 @@
+{
+  "info": {
+    "_postman_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+    "name": "NKSC About APIs",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Get All About Data",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8000/api/about/",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": ["api", "about", ""]
+        },
+        "description": "Get all about data in one API call"
+      },
+      "response": []
+    },
+    {
+      "name": "About Sections",
+      "item": [
+        {
+          "name": "GET All Sections",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8000/api/about/sections/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "about", "sections", ""]
+            }
+          }
+        },
+        {
+          "name": "GET Sections by Type - History",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8000/api/about/sections/?type=history",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "about", "sections", ""],
+              "query": [
+                {
+                  "key": "type",
+                  "value": "history"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "CREATE Section - History",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\": \"প্রতিষ্ঠার ইতিহাস\",\n    \"subtitle\": \"একটি মহান প্রতিষ্ঠানের যাত্রা শুরু\",\n    \"content\": \"বাংলাদেশ সমাজবিজ্ঞান গঠনের পথিকৃৎ ও ঢাকা বিশ্ববিদ্যালয় সমাজবিজ্ঞান বিভাগের তাত্ত্বিক চিন্তাধারার মাননীয়, দেশের শীর্ষ শিক্ষাবিদ হিসাবে একুশে পদক ও স্বাধীনতা পদক প্রাপ্ত অধ্যাপক ড. এ. কে. নাজমুল করিমের নামে একটি গবেষণা কেন্দ্র হিসেবে সমাজবিজ্ঞান বিভাগের একাডেমিক কমিটি ১৯৯৯ সনের ৩০ শে আগস্ট একটি সাব কমিটির রিপোর্ট অনুযায়ী গবেষণা কেন্দ্রটির নামকরণ করা হয় নাজমুল করিম স্টাডি সেন্টার।\",\n    \"section_type\": \"history\",\n    \"icon\": \"pi-history\",\n    \"display_order\": 1,\n    \"is_active\": true\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/about/sections/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "about", "sections", ""]
+            }
+          }
+        },
+        {
+          "name": "CREATE Section - Mission",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\": \"আমাদের অভিলক্ষ্য\",\n    \"content\": \"নাজমুল করিম স্টাডি সেন্টার সমাজবিজ্ঞান শিক্ষায় একাডেমিক শ্রেষ্ঠত্ব অর্জনে নিবেদিত। আমরা অধ্যাপক নাজমুল করিমের সামাজিক গবেষণার উত্তরাধিকারকে এগিয়ে নিয়ে যেতে সমকালীন সামাজিক চ্যালেঞ্জ মোকাবেলায় উদ্ভাবনী গবেষণা, মানসম্মত শিক্ষা এবং সম্প্রদায় সম্পৃক্ততার জন্য একটি শক্তিশালী প্ল্যাটফর্ম প্রদান করি।\",\n    \"section_type\": \"mission\",\n    \"icon\": \"pi-bullseye\",\n    \"display_order\": 3,\n    \"is_active\": true\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/about/sections/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "about", "sections", ""]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Timeline Events",
+      "item": [
+        {
+          "name": "GET All Timeline Events",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8000/api/about/timeline/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "about", "timeline", ""]
+            }
+          }
+        },
+        {
+          "name": "CREATE Timeline Event - 1999",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"year\": \"১৯৯৯\",\n    \"title\": \"ধারণা ও প্রস্তাবনা\",\n    \"description\": \"সমাজবিজ্ঞান বিভাগের একাডেমিক কমিটি গবেষণা কেন্দ্র প্রতিষ্ঠার প্রস্তাব অনুমোদন করে\",\n    \"icon\": \"pi-calendar\",\n    \"display_order\": 6,\n    \"is_active\": true\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/about/timeline/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "about", "timeline", ""]
+            }
+          }
+        },
+        {
+          "name": "CREATE Timeline Event - 2000",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"year\": \"২০০০\",\n    \"title\": \"প্রতিষ্ঠা ও যাত্রা\",\n    \"description\": \"১০ই মে কলাভবনে নাজমুল করিম স্টাডি সেন্টার আনুষ্ঠানিকভাবে যাত্রা শুরু করে\",\n    \"icon\": \"pi-flag\",\n    \"display_order\": 5,\n    \"is_active\": true\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/about/timeline/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "about", "timeline", ""]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Directors",
+      "item": [
+        {
+          "name": "GET All Directors",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8000/api/about/directors/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "about", "directors", ""]
+            }
+          }
+        },
+        {
+          "name": "GET Current Directors",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8000/api/about/directors/?type=current",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "about", "directors", ""],
+              "query": [
+                {
+                  "key": "type",
+                  "value": "current"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET Current Director Specific",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8000/api/about/directors/current/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "about", "directors", "current", ""]
+            }
+          }
+        },
+        {
+          "name": "CREATE Current Director",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"অধ্যাপক ড. তাইয়েবুর রহমান\",\n    \"position\": \"পরিচালক\",\n    \"director_type\": \"current\",\n    \"period\": \"২০২৫ - বর্তমান\",\n    \"bio\": \"ডেভেলপমেন্ট স্টাডিজ বিভাগের প্রফেসর ও সামাজিক বিজ্ঞান অনুষদের ডিন (ভারপ্রাপ্ত)\",\n    \"display_order\": 1,\n    \"is_active\": true\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/about/directors/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "about", "directors", ""]
+            }
+          }
+        },
+        {
+          "name": "CREATE Previous Director",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"অধ্যাপক ড. আ. ক. ম. জামাল উদ্দীন\",\n    \"position\": \"সাবেক পরিচালক\",\n    \"director_type\": \"previous\",\n    \"period\": \"২০২০ - ২০২৫\",\n    \"display_order\": 2,\n    \"is_active\": true\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/about/directors/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "about", "directors", ""]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Facilities",
+      "item": [
+        {
+          "name": "GET All Facilities",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8000/api/about/facilities/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "about", "facilities", ""]
+            }
+          }
+        },
+        {
+          "name": "CREATE Facility - Location",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\": \"অবস্থান\",\n    \"description\": \"ঢাকা বিশ্ববিদ্যালয়ের কলাভবন এলাকার পশ্চিমভাগ লেকচার থিয়েটার ভবনের নিচতলায় অবস্থিত\",\n    \"icon\": \"pi-map-marker\",\n    \"display_order\": 1,\n    \"is_active\": true\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/about/facilities/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "about", "facilities", ""]
+            }
+          }
+        },
+        {
+          "name": "CREATE Facility - Director Office",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\": \"পরিচালকের অফিস\",\n    \"description\": \"কক্ষ নং-১ (পরিচালকের অফিস)\",\n    \"icon\": \"pi-briefcase\",\n    \"room_number\": \"কক্ষ নং-১\",\n    \"display_order\": 2,\n    \"is_active\": true\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/about/facilities/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "about", "facilities", ""]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
