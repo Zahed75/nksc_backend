@@ -1,5 +1,7 @@
 asgiref==3.8.1
 attrs==25.4.0
+celery==5.3.6
+redis==5.0.1
 Django==4.2.11
 django-ckeditor==6.7.3
 django-cleanup==9.0.0

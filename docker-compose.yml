@@ -12,26 +12,18 @@ services:
       - ./media:/app/media
       - ./staticfiles:/app/staticfiles
       - ./logs:/app/logs
-      - ./.env:/app/.env
     environment:
       - DATABASE_HOST=${DATABASE_HOST:-localhost}
       - DATABASE_PORT=${DATABASE_PORT:-3306}
       - DATABASE_NAME=${DATABASE_NAME:-nksc_db}
       - DATABASE_USER=${DATABASE_USER:-root}
       - DATABASE_PASSWORD=${DATABASE_PASSWORD:-}
-      - DEBUG=${DEBUG:-False}
-      - PRODUCTION=${PRODUCTION:-True}
     command: >
       sh -c "python manage.py migrate --noinput &&
              python manage.py collectstatic --noinput &&
              gunicorn --bind 0.0.0.0:8000 --workers 3 --timeout 120 nksc_backend.wsgi:application"
     networks:
       - nksc-network
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000/api/about/"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
 
   nksc-redis:
     image: redis:alpine
@@ -39,20 +31,6 @@ services:
     restart: unless-stopped
     volumes:
       - redis_data:/data
-    networks:
-      - nksc-network
-
-  nksc-celery:
-    build: .
-    container_name: nksc-celery
-    restart: unless-stopped
-    command: celery -A nksc_backend worker --loglevel=info
-    volumes:
-      - ./media:/app/media
-      - ./.env:/app/.env
-    depends_on:
-      - nksc-backend
-      - nksc-redis
     networks:
       - nksc-network
 
