@@ -364,6 +364,8 @@ if PRODUCTION:
     # Production database (MySQL from .env)
     # Database configuration
  # Database configuration
+    # Database configuration
+    # Use environment variables directly, don't split by PRODUCTION
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
