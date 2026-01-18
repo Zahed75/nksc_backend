@@ -366,9 +366,9 @@ if PRODUCTION:
         'default': {
             'ENGINE': 'django.db.backends.mysql',
             'NAME': 'nksc_db',
-            'USER': 'nksc_user',  # Use nksc_user instead of root
-            'PASSWORD': 'Nksc@2026',
-            'HOST': 'nksc-mysql',
+            'USER': 'root',           # Using root user
+            'PASSWORD': 'Nksc@2026',  # Your password
+            'HOST': 'nksc-mysql',     # MySQL container name
             'PORT': '3306',
             'OPTIONS': {
                 'charset': 'utf8mb4',
