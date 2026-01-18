@@ -297,7 +297,7 @@ SECRET_KEY = os.getenv(
 
 # Get DEBUG and PRODUCTION from .env
 DEBUG = os.getenv('DEBUG', 'True').lower() == 'true'
-PRODUCTION = os.getenv('PRODUCTION', 'False').lower() == 'false'
+PRODUCTION = os.getenv('PRODUCTION', 'False').lower() == 'true'
 
 # ALLOWED_HOSTS from .env
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
@@ -361,25 +361,23 @@ WSGI_APPLICATION = 'nksc_backend.wsgi.application'
 
 # Database configuration
 if PRODUCTION:
-    # Production database (MySQL from .env)
-    # Database configuration
- # Database configuration
-    # Database configuration
-    # Use environment variables directly, don't split by PRODUCTION
+
+
     DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.mysql',
-            'NAME': os.getenv('DATABASE_NAME', 'nksc_db'),
-            'USER': os.getenv('DATABASE_USER', 'root'),
-            'PASSWORD': os.getenv('DATABASE_PASSWORD', ''),
-            'HOST': os.getenv('DATABASE_HOST', 'localhost'),
-            'PORT': os.getenv('DATABASE_PORT', '3306'),
-            'OPTIONS': {
-                'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
-                'charset': 'utf8mb4',
-            }
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': os.getenv('DATABASE_NAME', os.getenv('DEV_DB_NAME', 'nksc_db')),
+        'USER': os.getenv('DATABASE_USER', os.getenv('DEV_DB_USER', 'root')),
+        'PASSWORD': os.getenv('DATABASE_PASSWORD', os.getenv('DEV_DB_PASSWORD', '')),
+        'HOST': os.getenv('DATABASE_HOST', os.getenv('DEV_DB_HOST', 'nksc-mysql')),
+        'PORT': os.getenv('DATABASE_PORT', os.getenv('DEV_DB_PORT', '3306')),
+        'OPTIONS': {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+            'charset': 'utf8mb4',
+        }
         }
     }
+ 
 else:
     # Development database (MySQL from .env or defaults)
     DATABASES = {
