@@ -150,7 +150,7 @@ class AboutSectionsAPIView(APIView):
         """Set permissions based on HTTP method"""
         if self.request.method == 'GET':
             return [AllowAny()]
-        return [IsAdminUser()]
+        return [AllowAny()]
     
     def get(self, request):
         section_type = request.query_params.get('type', None)
@@ -196,7 +196,7 @@ class TimelineEventsAPIView(APIView):
         """Set permissions based on HTTP method"""
         if self.request.method == 'GET':
             return [AllowAny()]
-        return [IsAdminUser()]
+        return [AllowAny()]
     
     def get(self, request):
         events = TimelineEvent.objects.filter(is_active=True).order_by('-display_order', 'year')
@@ -234,7 +234,7 @@ class DirectorsAPIView(APIView):
         """Set permissions based on HTTP method"""
         if self.request.method == 'GET':
             return [AllowAny()]
-        return [IsAdminUser()]
+        return [AllowAny()]
     
     def get(self, request):
         director_type = request.query_params.get('type', None)
@@ -255,7 +255,9 @@ class DirectorsAPIView(APIView):
         })
     
     def post(self, request):
+        
         """Create a new director"""
+        permission_classes = [AllowAny]
         serializer = DirectorSerializer(data=request.data)
         
         if serializer.is_valid():
@@ -303,7 +305,7 @@ class FacilitiesAPIView(APIView):
         """Set permissions based on HTTP method"""
         if self.request.method == 'GET':
             return [AllowAny()]
-        return [IsAdminUser()]
+        return [AllowAnysss()]
     
     def get(self, request):
         facilities = Facility.objects.filter(is_active=True).order_by('display_order', 'title')
