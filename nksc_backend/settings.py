@@ -264,19 +264,6 @@
 # CKEDITOR_RESTRICT_BY_USER = True
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 import logging
 from datetime import timedelta
 from pathlib import Path
@@ -380,7 +367,7 @@ if PRODUCTION:
             'ENGINE': 'django.db.backends.mysql',
             'NAME': os.getenv('DATABASE_NAME', 'nksc_db'),
             'USER': os.getenv('DATABASE_USER', 'root'),
-            'PASSWORD': os.getenv('DATABASE_PASSWORD', 'rootpassword'),
+            'PASSWORD': os.getenv('DATABASE_PASSWORD', 'Nksc@2026'),
             'HOST': os.getenv('DATABASE_HOST', 'nksc-mysql'),
             'PORT': os.getenv('DATABASE_PORT', '3306'),
             'OPTIONS': {
@@ -389,7 +376,8 @@ if PRODUCTION:
             }
         }
     }
-    print(f"PRODUCTION MODE: Using database host: {os.getenv('DATABASE_HOST', 'nksc-mysql')}")
+    print(
+        f"PRODUCTION MODE: Using database host: {os.getenv('DATABASE_HOST', 'nksc-mysql')}")
 else:
     # Development database (uses DEV_DB_* variables)
     DATABASES = {
@@ -397,8 +385,9 @@ else:
             'ENGINE': 'django.db.backends.mysql',
             'NAME': os.getenv('DEV_DB_NAME', 'nksc_db'),
             'USER': os.getenv('DEV_DB_USER', 'root'),
-            'PASSWORD': os.getenv('DEV_DB_PASSWORD', 'rootpassword'),
-            'HOST': os.getenv('DEV_DB_HOST', 'nksc-mysql'),  # Fixed: default to nksc-mysql
+            'PASSWORD': os.getenv('DATABASE_PASSWORD', 'Nksc@2026'),
+            # Fixed: default to nksc-mysql
+            'HOST': os.getenv('DEV_DB_HOST', 'nksc-mysql'),
             'PORT': os.getenv('DEV_DB_PORT', '3306'),
             'OPTIONS': {
                 'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
@@ -406,7 +395,8 @@ else:
             }
         }
     }
-    print(f"DEVELOPMENT MODE: Using database host: {os.getenv('DEV_DB_HOST', 'nksc-mysql')}")
+    print(
+        f"DEVELOPMENT MODE: Using database host: {os.getenv('DEV_DB_HOST', 'nksc-mysql')}")
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
