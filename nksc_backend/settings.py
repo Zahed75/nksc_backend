@@ -234,7 +234,7 @@ CORS_ALLOWED_ORIGINS = [
 # Add these settings to fix redirect loop with reverse proxy
 USE_X_FORWARDED_HOST = True  # Trust reverse proxy headers
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')  # Trust proxy SSL info
-SECURE_SSL_REDIRECT = True  # Let aaPanel handle SSL redirect, not Django
+SECURE_SSL_REDIRECT = False  # Let aaPanel handle SSL redirect, not Django
 
 # For production, keep these True but SSL redirect is False
 CSRF_COOKIE_SECURE = True
