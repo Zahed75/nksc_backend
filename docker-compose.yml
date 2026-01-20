@@ -1,6 +1,6 @@
 services:
   nksc-mysql:
-    image: mysql:8.0
+    image: mysql:5.7
     container_name: nksc-mysql
     restart: unless-stopped
     environment:
