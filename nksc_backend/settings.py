@@ -14,13 +14,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 STATIC_DIR = os.path.join(BASE_DIR, 'static')
 MEDIA_DIR = os.path.join(BASE_DIR, 'media')
+
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-1gm7eozzeu3ac8c6_rycbegs6x3*hxu%z_^bnthml(qrhr%50_'
 
 DEBUG = True
-PRODUCTION = True  # Changed to True for production
+PRODUCTION = True  # Set to True for production, False for local development
 
-# ========== FIX FOR ALLOWED HOSTS ==========
+# ========== ALLOWED HOSTS ==========
 ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
@@ -32,7 +33,6 @@ ALLOWED_HOSTS = [
 
 # Application definition
 INSTALLED_APPS = [
-
     # Django core
     "django.contrib.admin",
     "django.contrib.auth",
@@ -61,7 +61,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'corsheaders.middleware.CorsMiddleware',  # Added CORS middleware
+    'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -89,9 +89,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'nksc_backend.wsgi.application'
 
-# Database
-# Database configuration - UPDATED FOR PRODUCTION
+# ========== DATABASE CONFIGURATION WITH IF/ELSE ==========
 if PRODUCTION:
+    # Production database (Docker container)
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
@@ -106,13 +106,18 @@ if PRODUCTION:
             }
         }
     }
+    print("=" * 50)
+    print("PRODUCTION MODE: Using Docker MySQL database")
+    print(f"Database Host: {DATABASES['default']['HOST']}")
+    print("=" * 50)
 else:
+    # Development database (local machine)
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
             'NAME': 'nksc_db',
             'USER': 'root',
-            'PASSWORD': '',
+            'PASSWORD': '',  # Your local MySQL password (empty for development)
             'HOST': 'localhost',
             'PORT': '3306',
             'OPTIONS': {
@@ -121,6 +126,10 @@ else:
             }
         }
     }
+    print("=" * 50)
+    print("DEVELOPMENT MODE: Using Local MySQL database")
+    print(f"Database Host: {DATABASES['default']['HOST']}")
+    print("=" * 50)
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
@@ -152,15 +161,18 @@ REST_FRAMEWORK = {
 }
 
 SPECTACULAR_SETTINGS = {
-    "TITLE": "Nazmul Karim Study-Center API University Of Dhaka ",
+    "TITLE": "Nazmul Karim Study-Center API University Of Dhaka",
     "DESCRIPTION": "NKSC Backend APIs-Zahed Hasan",
     "VERSION": "1.0.0",
     "SERVE_INCLUDE_SCHEMA": True,
+    # Add this to fix 500 error
+    "SERVE_PERMISSIONS": ["rest_framework.permissions.AllowAny"],
+    "COMPONENT_SPLIT_REQUEST": True,
+    "SCHEMA_PATH_PREFIX": r'/api/',
 }
 
 
 # Optional: Suppress warnings
-
 logging.getLogger('drf_spectacular').setLevel(logging.ERROR)
 
 SIMPLE_JWT = {
@@ -182,12 +194,6 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_REFRESH_EXP_CLAIM': 'refresh_exp',
     'SLIDING_TOKEN_LIFETIME': timedelta(minutes=5),
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
-    'TOKEN_OBTAIN_SERIALIZER': 'rest_framework_simplejwt.serializers.TokenObtainPairSerializer',
-    'TOKEN_REFRESH_SERIALIZER': 'rest_framework_simplejwt.serializers.TokenRefreshSerializer',
-    'TOKEN_VERIFY_SERIALIZER': 'rest_framework_simplejwt.serializers.TokenVerifySerializer',
-    'TOKEN_BLACKLIST_SERIALIZER': 'rest_framework_simplejwt.serializers.TokenBlacklistSerializer',
-    'SLIDING_TOKEN_OBTAIN_SERIALIZER': 'rest_framework_simplejwt.serializers.TokenObtainSlidingSerializer',
-    'SLIDING_TOKEN_REFRESH_SERIALIZER': 'rest_framework_simplejwt.serializers.TokenRefreshSlidingSerializer',
 }
 
 # Internationalization
@@ -203,7 +209,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = MEDIA_DIR
 
-# ========== FIX FOR CSRF AND CORS SETTINGS ==========
+# ========== CSRF AND CORS SETTINGS ==========
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:4200",
     "http://localhost:4300",
@@ -230,17 +236,13 @@ CORS_ALLOWED_ORIGINS = [
     "https://www.api.nkscdu.com",
 ]
 
-# ========== FIX FOR REDIRECT LOOP ==========
-# Add these settings to fix redirect loop with reverse proxy
-# USE_X_FORWARDED_HOST = True  # Trust reverse proxy headers
-# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')  # Trust proxy SSL info
-# SECURE_SSL_REDIRECT = False  # Let aaPanel handle SSL redirect, not Django
+# ========== IMPORTANT: NO SSL SETTINGS ==========
+# Let aaPanel/nginx handle SSL, NOT Django
 
-# # For production, keep these True but SSL redirect is False
-# CSRF_COOKIE_SECURE = True
-# SESSION_COOKIE_SECURE = True
+# These should be False since nginx handles SSL
+CSRF_COOKIE_SECURE = False      # Set to False, nginx handles SSL
+SESSION_COOKIE_SECURE = False   # Set to False, nginx handles SSL
 
-# CSRF settings for DRF - ADD THESE
 CSRF_USE_SESSIONS = False
 CSRF_COOKIE_HTTPONLY = False
 
@@ -298,8 +300,7 @@ CKEDITOR_RESTRICT_BY_USER = True
 
 # Debug output
 print("=" * 50)
-print("PRODUCTION MODE: Using MySQL database")
-print(f"Database Host: {DATABASES['default']['HOST']}")
+print(f"DEBUG: {DEBUG}")
+print(f"PRODUCTION: {PRODUCTION}")
 print(f"Allowed Hosts: {ALLOWED_HOSTS}")
-print(f"SECURE_SSL_REDIRECT: {SECURE_SSL_REDIRECT}")
 print("=" * 50)
