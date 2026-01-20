@@ -1,4 +1,4 @@
-# docker-compose.yml - SIMPLIFIED WITH MARIADB
+# docker-compose.yml - CHANGED PORT
 services:
   nksc-db:
     image: mariadb:10.11
@@ -11,7 +11,7 @@ services:
     volumes:
       - db_data:/var/lib/mysql
     ports:
-      - "3306:3306"
+      - "3307:3306"  # Changed from 3306:3306 to 3307:3306
     healthcheck:
       test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
       timeout: 10s
@@ -30,7 +30,7 @@ services:
       - ./logs:/app/logs
     environment:
       - DATABASE_HOST=nksc-db
-      - DATABASE_PORT=3306
+      - DATABASE_PORT=3306  # Keep as 3306 inside container
       - DATABASE_NAME=nksc_db
       - DATABASE_USER=root
       - DATABASE_PASSWORD=Nksc@2026
