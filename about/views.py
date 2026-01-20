@@ -305,7 +305,7 @@ class FacilitiesAPIView(APIView):
         """Set permissions based on HTTP method"""
         if self.request.method == 'GET':
             return [AllowAny()]
-        return [AllowAnysss()]
+        return [AllowAny()]
     
     def get(self, request):
         facilities = Facility.objects.filter(is_active=True).order_by('display_order', 'title')
