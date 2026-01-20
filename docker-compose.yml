@@ -1,24 +1,30 @@
-# docker-compose.yml - SIMPLE FIXED VERSION
+# docker-compose.yml - FIXED VERSION
+version: '3.8'
+
 services:
   nksc-mysql:
     image: mysql:8.0
     container_name: nksc-mysql
-    restart: always
+    restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: Nksc@2026
       MYSQL_DATABASE: nksc_db
+      MYSQL_ROOT_HOST: '%'
     volumes:
       - mysql_data:/var/lib/mysql
-    # FIX: Use mysql_native_password authentication plugin
+      - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql  # Optional: for initial setup
     command: 
       - --default-authentication-plugin=mysql_native_password
       - --character-set-server=utf8mb4
       - --collation-server=utf8mb4_unicode_ci
+      - --explicit_defaults_for_timestamp=1
+    ports:
+      - "3307:3306"  # Expose MySQL externally on different port if needed
     networks:
       - nksc-network
-    # Add healthcheck
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-pNksc@2026"]
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-pNksc@2026"]
+      interval: 10s
       timeout: 20s
       retries: 10
       start_period: 30s
@@ -26,31 +32,32 @@ services:
   nksc-backend:
     build: .
     container_name: nksc-backend
-    restart: always
+    restart: unless-stopped
     ports:
       - "8000:8000"
     volumes:
       - ./media:/app/media
       - ./staticfiles:/app/staticfiles
       - ./logs:/app/logs
+      - ./.env:/app/.env  # Mount .env file
+    env_file:
+      - .env  # Load environment variables
     environment:
-      # Use root user for simplicity - FIXED
+      # Override specific variables if needed
       - DATABASE_HOST=nksc-mysql
       - DATABASE_PORT=3306
-      - DATABASE_NAME=nksc_db
-      - DATABASE_USER=root
-      - DATABASE_PASSWORD=Nksc@2026
-      - PRODUCTION=True
-      - DEBUG=True
     depends_on:
       nksc-mysql:
         condition: service_healthy
-    # FIX: Wait longer for MySQL to be ready
+      nksc-redis:
+        condition: service_started
     command: >
-      sh -c "echo 'Waiting for database...' &&
-             sleep 10 &&
+      sh -c "echo 'Waiting for database to be ready...' &&
+             sleep 15 &&
              echo 'Running migrations...' &&
              python manage.py migrate --noinput &&
+             echo 'Collecting static files...' &&
+             python manage.py collectstatic --noinput --clear &&
              echo 'Starting server...' &&
              gunicorn --bind 0.0.0.0:8000 --workers 3 --timeout 120 nksc_backend.wsgi:application"
     networks:
@@ -59,12 +66,20 @@ services:
   nksc-redis:
     image: redis:alpine
     container_name: nksc-redis
-    restart: always
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
     networks:
       - nksc-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
 volumes:
   mysql_data:
+    driver: local
 
 networks:
   nksc-network:

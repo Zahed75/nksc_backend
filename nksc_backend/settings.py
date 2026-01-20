@@ -361,20 +361,23 @@ WSGI_APPLICATION = 'nksc_backend.wsgi.application'
 
 # Database configuration - FIXED VERSION
 if PRODUCTION:
-    # Production database (uses DATABASE_* variables)
+
     DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.mysql',
-            'NAME': 'nksc_db',
-            'USER': 'root',           # Using root user
-            'PASSWORD': 'Nksc@2026',  # Your password
-            'HOST': 'nksc-mysql',     # MySQL container name
-            'PORT': '3306',
-            'OPTIONS': {
-                'charset': 'utf8mb4',
-            }
-        }
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': os.getenv('DATABASE_NAME', 'nksc_db'),
+        'USER': os.getenv('DATABASE_USER', 'root'),
+        'PASSWORD': os.getenv('DATABASE_PASSWORD', 'Nksc@2026'),
+        'HOST': os.getenv('DATABASE_HOST', 'nksc-mysql'),
+        'PORT': os.getenv('DATABASE_PORT', '3306'),
+        'OPTIONS': {
+            'charset': 'utf8mb4',
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+        },
+        'CONN_MAX_AGE': 300,
     }
+}
+    
 else:
     # Development database (uses DEV_DB_* variables)
     DATABASES = {
