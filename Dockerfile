@@ -1,9 +1,10 @@
-# Dockerfile - COLLECT STATIC DURING BUILD
+# Dockerfile - FIXED GUNICORN
 FROM python:3.11-slim
 
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
+ENV PATH="/home/django/.local/bin:${PATH}"
 
 # Set work directory
 WORKDIR /app
@@ -24,14 +25,15 @@ COPY requirements.txt .
 RUN pip install --upgrade pip && \
     pip install --no-cache-dir -r requirements.txt
 
+# Install gunicorn explicitly
+RUN pip install --no-cache-dir gunicorn
+
 # Copy project
 COPY . .
 
 # Create directories
-RUN mkdir -p /app/media /app/staticfiles /app/logs
-
-# Set proper permissions (RUN as root, so we have permission)
-RUN chown -R 1000:1000 /app && \
+RUN mkdir -p /app/media /app/staticfiles /app/logs && \
+    chown -R 1000:1000 /app && \
     chmod -R 755 /app
 
 # Create non-root user
@@ -40,11 +42,8 @@ RUN useradd -m -u 1000 django
 # Switch to non-root user
 USER django
 
-# Collect static files during build (as root, then fix permissions)
-USER root
-RUN python manage.py collectstatic --noinput || echo "Collectstatic failed, continuing..."
-RUN chown -R django:django /app/staticfiles
-USER django
+# Add user's local bin to PATH
+ENV PATH="/home/django/.local/bin:${PATH}"
 
 # Expose port
 EXPOSE 8000
