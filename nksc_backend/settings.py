@@ -8,7 +8,6 @@ import pymysql
 pymysql.version_info = (2, 2, 1, "final", 0)
 pymysql.install_as_MySQLdb()
 
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
@@ -19,16 +18,16 @@ MEDIA_DIR = os.path.join(BASE_DIR, 'media')
 SECRET_KEY = 'django-insecure-1gm7eozzeu3ac8c6_rycbegs6x3*hxu%z_^bnthml(qrhr%50_'
 
 DEBUG = True
-PRODUCTION = True  # Set to True for production, False for local development
+PRODUCTION = True
 
 # ========== ALLOWED HOSTS ==========
 ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
-    '103.191.51.224',      # Your VPS IP
-    'api.nkscdu.com',      # Your domain
-    'www.api.nkscdu.com',  # www version
-    '.nkscdu.com',         # All subdomains
+    '103.191.51.224',
+    'api.nkscdu.com',
+    'www.api.nkscdu.com',
+    '.nkscdu.com',
 ]
 
 # Application definition
@@ -98,7 +97,7 @@ if PRODUCTION:
             'NAME': 'nksc_db',
             'USER': 'root',
             'PASSWORD': 'Nksc@2026',  # Your MySQL password
-            'HOST': 'nksc-db',        # Docker container name
+            'HOST': 'nksc-db',  # Docker container name
             'PORT': '3306',
             'OPTIONS': {
                 'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
@@ -147,7 +146,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 REST_FRAMEWORK = {
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
     "DEFAULT_AUTHENTICATION_CLASSES": (
@@ -170,7 +168,6 @@ SPECTACULAR_SETTINGS = {
     "COMPONENT_SPLIT_REQUEST": True,
     "SCHEMA_PATH_PREFIX": r'/api/',
 }
-
 
 # Optional: Suppress warnings
 logging.getLogger('drf_spectacular').setLevel(logging.ERROR)
@@ -240,8 +237,8 @@ CORS_ALLOWED_ORIGINS = [
 # Let aaPanel/nginx handle SSL, NOT Django
 
 # These should be False since nginx handles SSL
-CSRF_COOKIE_SECURE = False      # Set to False, nginx handles SSL
-SESSION_COOKIE_SECURE = False   # Set to False, nginx handles SSL
+CSRF_COOKIE_SECURE = False  # Set to False, nginx handles SSL
+SESSION_COOKIE_SECURE = False  # Set to False, nginx handles SSL
 
 CSRF_USE_SESSIONS = False
 CSRF_COOKIE_HTTPONLY = False
@@ -255,7 +252,6 @@ EMAIL_HOST_USER = 'syscomatic.technologies@gmail.com'
 EMAIL_HOST_PASSWORD = 'nckp gdyt pppw axch'
 
 FRONTEND_LOGIN_URL = 'http://localhost:4200/'
-
 
 # CKEditor Configuration
 CKEDITOR_CONFIGS = {
