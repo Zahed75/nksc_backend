@@ -1,0 +1,65 @@
+==================================================
+DEVELOPMENT MODE: Using Local MySQL database
+Database Host: localhost
+==================================================
+==================================================
+DEBUG: True
+PRODUCTION: False
+Allowed Hosts: ['localhost', '127.0.0.1', '103.191.51.224', 'api.nkscdu.com', 'www.api.nkscdu.com', '.nkscdu.com']
+==================================================
+[
+{
+  "model": "media_stuff.galleryevent",
+  "pk": 1,
+  "fields": {
+    "title": "Test",
+    "slug": "test",
+    "description": "Lorem Ipsum Generators for Web Layout\r\n\r\nMailchimp\r\nhttps://www.mailchimp.com\r\nLiven up your web layout wireframes and mockups with one of these lorem ipsum generators. Liven up your web layout wireframes and mockups with...\r\n1M+ visits in past month",
+    "short_description": "Lorem Ipsum Generators for Web Layout",
+    "event_date": "2026-01-18",
+    "location": "Theater",
+    "category": null,
+    "status": "published",
+    "is_featured": true,
+    "views_count": 0,
+    "created_at": "2026-01-18T08:37:30.076Z",
+    "updated_at": "2026-01-18T08:53:07.343Z",
+    "published_at": "2026-01-18T08:53:07.343Z"
+  }
+},
+{
+  "model": "media_stuff.galleryimage",
+  "pk": "51e3c7d272514fcfb3aef020e16e9c00",
+  "fields": {
+    "event": 1,
+    "image": "gallery/images/WhatsApp_Image_2025-11-08_at_1.03.45_AM_1.jpeg",
+    "caption": "",
+    "display_order": 0,
+    "is_cover": false,
+    "created_at": "2026-01-18T08:37:30.082Z"
+  }
+},
+{
+  "model": "media_stuff.galleryimage",
+  "pk": "8d7f1deaf7084c4b8468d83eba9f3ae2",
+  "fields": {
+    "event": 1,
+    "image": "gallery/images/WhatsApp_Image_2025-11-08_at_1.03.44_AM.jpeg",
+    "caption": "Test",
+    "display_order": 0,
+    "is_cover": true,
+    "created_at": "2026-01-18T08:37:30.081Z"
+  }
+},
+{
+  "model": "media_stuff.galleryimage",
+  "pk": "9af2715e13444397acc3028a0ea57135",
+  "fields": {
+    "event": 1,
+    "image": "gallery/images/WhatsApp_Image_2025-11-08_at_1.06.11_AM.jpeg",
+    "caption": "",
+    "display_order": 0,
+    "is_cover": false,
+    "created_at": "2026-01-18T08:37:30.083Z"
+  }
+}
